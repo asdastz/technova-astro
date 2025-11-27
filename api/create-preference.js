@@ -1,9 +1,9 @@
 // Vercel Serverless Function para crear preferencia de Mercado Pago
 // Esta función se ejecuta en el servidor de Vercel
 
-const { MercadoPagoConfig, Preference } = require('mercadopago');
+import { MercadoPagoConfig, Preference } from 'mercadopago';
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   // Solo aceptar POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -74,5 +74,5 @@ module.exports = async (req, res) => {
       error: error.message || 'Error al crear la preferencia de pago',
     });
   }
-};
+}
 
