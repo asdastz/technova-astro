@@ -171,5 +171,5 @@ Este proyecto está configurado para **Vercel**, donde las funciones en `api/` s
 
 📚 **Documentación de Mercado Pago:**
 - [Checkout Pro](https://www.mercadopago.com/developers/es/docs/checkout-pro/landing)
-- [SDK de Node.js](https://www.mercadopago.com/developers/es/docs/sdks-library/client-side/sdk-for-nodejs)
+- [SDK de Node.js](https://www.mercadopago.com/developers/es/docs/sdks-library/server-side/sdk-for-nodejs) - [GitHub](https://github.com/mercadopago/sdk-nodejs)
 
