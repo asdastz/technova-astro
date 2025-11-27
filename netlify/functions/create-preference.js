@@ -41,7 +41,7 @@ exports.handler = async (event, context) => {
         currency_id: 'ARS',
         unit_price: Number(item.price),
       })),
-      statement_descriptor: 'TechNova',
+      statement_descriptor: 'Tech',
       external_reference: `order_${Date.now()}`,
       back_urls: {
         success: `${baseUrl}/pago/success`,

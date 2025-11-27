@@ -2,7 +2,7 @@
   "name": "cowffe-astro",
   "type": "module",
   "version": "1.0.0",
-  "description": "TechNova - Tienda de productos tecnológicos (Astro)",
+  "description": "Tech - Tienda de productos tecnológicos (Astro)",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",

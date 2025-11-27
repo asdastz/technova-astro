@@ -1,4 +1,4 @@
-# TechNova - Versión Astro 🚀
+# Tech - Versión Astro 🚀
 
 Tienda online moderna de productos tecnológicos y servicios de TI, construida con **Astro** - un framework mucho más simple y rápido que Next.js.
 
