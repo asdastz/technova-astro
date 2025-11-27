@@ -1,6 +1,8 @@
 # Tech - Versión Astro 🚀
 
-Tienda online moderna de productos tecnológicos y servicios de TI, construida con **Astro** - un framework mucho más simple y rápido que Next.js.
+Ejemplo de integración de **Mercado Pago Checkout Pro** con Astro. Tienda online moderna de productos tecnológicos y servicios de TI, construida con **Astro** - un framework mucho más simple y rápido que Next.js.
+
+Este proyecto demuestra cómo integrar el **Checkout Pro de Mercado Pago** en una aplicación Astro usando Vercel Serverless Functions.
 
 ## ✨ ¿Por qué Astro?
 
@@ -17,7 +19,8 @@ Tienda online moderna de productos tecnológicos y servicios de TI, construida c
 - **Astro 4** - Framework estático ultra-rápido
 - **Tailwind CSS** - Estilos utility-first
 - **Alpine.js** - Interactividad ligera (carrito, filtros)
-- **Netlify Functions** - Backend serverless para Mercado Pago
+- **Mercado Pago Checkout Pro** - Solución de pago completa de Mercado Pago
+- **Vercel Serverless Functions** - Backend serverless para crear preferencias de pago
 
 ## 📦 Instalación
 
@@ -47,25 +50,45 @@ cp env.example .env
 MERCADOPAGO_ACCESS_TOKEN=TEST-tu-token-aqui
 ```
 
-## 🚀 Despliegue en Netlify
+> 💡 **Obtén tu Access Token:** Ve a [Mercado Pago Developers](https://www.mercadopago.com/developers) y crea una aplicación para obtener tus credenciales de prueba o producción.
+
+## 🚀 Despliegue en Vercel
 
 ### Opción 1: Desde la interfaz
-1. Ve a [netlify.com](https://netlify.com) y crea una cuenta
-2. Arrastra la carpeta del proyecto o conecta tu repositorio
-3. Agrega la variable `MERCADOPAGO_ACCESS_TOKEN` en Site Settings > Environment Variables
-4. ¡Listo!
+1. Ve a [vercel.com](https://vercel.com) y crea una cuenta
+2. Conecta tu repositorio de GitHub
+3. Agrega la variable `MERCADOPAGO_ACCESS_TOKEN` en Project Settings > Environment Variables
+4. Vercel detectará automáticamente Astro y desplegará el proyecto
+5. ¡Listo!
 
-### Opción 2: Con Netlify CLI
+### Opción 2: Con Vercel CLI
 ```bash
 # Instalar CLI
-npm install -g netlify-cli
+npm install -g vercel
 
 # Login
-netlify login
+vercel login
 
 # Desplegar
-netlify deploy --prod
+vercel --prod
 ```
+
+### 📝 Integración con Mercado Pago Checkout Pro
+
+Este proyecto implementa el **Checkout Pro** de Mercado Pago, que redirige a los usuarios a la página de pago de Mercado Pago para completar la transacción.
+
+**Flujo de pago:**
+1. El usuario agrega productos al carrito
+2. Al hacer clic en "Pagar con Mercado Pago", se llama a `/api/create-preference`
+3. La función serverless crea una preferencia de pago en Mercado Pago
+4. El usuario es redirigido al Checkout Pro de Mercado Pago
+5. Después del pago, Mercado Pago redirige a las páginas de resultado:
+   - `/pago/success` - Pago aprobado
+   - `/pago/failure` - Pago rechazado
+   - `/pago/pending` - Pago pendiente
+
+**API Route:**
+- `/api/create-preference` - Crea la preferencia de pago usando el SDK de Mercado Pago
 
 ## 📁 Estructura del Proyecto
 
@@ -93,9 +116,8 @@ COWFFE-astro/
 │   │       └── pending.astro
 │   └── styles/
 │       └── global.css
-├── netlify/
-│   └── functions/         # Funciones serverless
-│       └── create-preference.js
+├── api/                   # Funciones serverless de Vercel
+│   └── create-preference.js
 ├── public/                # Assets estáticos
 ├── astro.config.mjs
 ├── tailwind.config.mjs
@@ -120,14 +142,6 @@ Edita los archivos en `src/data/`:
 - `products.ts` - Productos de la tienda
 - `services.ts` - Servicios ofrecidos
 
-## 🔄 Diferencias con la versión Next.js
-
-1. **Sin "use client"** - Todo es estático por defecto
-2. **Sin Context API** - Usamos Alpine.js store para el carrito
-3. **Sin framer-motion** - Animaciones CSS puras
-4. **Sin react-icons** - SVGs inline
-5. **Netlify Functions** - En lugar de API routes de Next.js
-
 ## 📝 Comandos
 
 | Comando | Descripción |
@@ -140,13 +154,22 @@ Edita los archivos en `src/data/`:
 
 El build genera una carpeta `dist/` con archivos estáticos. Puedes subirla a:
 
-- **Netlify** (recomendado - soporta las functions)
-- **Vercel**
-- **Cloudflare Pages**
-- **GitHub Pages** (sin Mercado Pago)
+- **Vercel** (recomendado - soporta las serverless functions automáticamente)
+- **Netlify** (requiere adaptar las funciones a formato Netlify)
+- **Cloudflare Pages** (con Cloudflare Workers para funciones)
+- **GitHub Pages** (sin Mercado Pago - solo estático)
 - Cualquier hosting que sirva archivos estáticos
 
 ---
 
-**Nota:** Para Mercado Pago necesitas un hosting que soporte funciones serverless (Netlify, Vercel, etc.)
+**Nota:** Este es un ejemplo de integración con **Mercado Pago Checkout Pro**. Para que funcione correctamente, necesitas:
+- Un hosting que soporte funciones serverless (como **Vercel**)
+- Un Access Token de Mercado Pago (de prueba o producción)
+- Configurar las variables de entorno en tu plataforma de hosting
+
+Este proyecto está configurado para **Vercel**, donde las funciones en `api/` se exponen automáticamente como rutas.
+
+📚 **Documentación de Mercado Pago:**
+- [Checkout Pro](https://www.mercadopago.com/developers/es/docs/checkout-pro/landing)
+- [SDK de Node.js](https://www.mercadopago.com/developers/es/docs/sdks-library/client-side/sdk-for-nodejs)
 
