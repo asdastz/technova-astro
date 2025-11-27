@@ -41,7 +41,7 @@ const { title, description = 'Tienda especializada en productos tecnológicos de
     <script is:inline>
       document.addEventListener('alpine:init', () => {
         Alpine.store('cart', {
-          items: JSON.parse(localStorage.getItem('technova-cart') || '[]'),
+          items: JSON.parse(localStorage.getItem('tech-cart') || '[]'),
           
           add(product) {
             const existing = this.items.find(i => i.id === product.id);
@@ -82,7 +82,7 @@ const { title, description = 'Tienda especializada en productos tecnológicos de
           },
           
           save() {
-            localStorage.setItem('technova-cart', JSON.stringify(this.items));
+            localStorage.setItem('tech-cart', JSON.stringify(this.items));
           }
         });
       });
