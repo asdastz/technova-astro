@@ -127,22 +127,22 @@ import Layout from '../layouts/Layout.astro';
                   </div>
                   <div class="flex justify-between text-gray-600">
                     <span>Envío:</span>
-                    <span class="font-semibold" x-text="$store.cart.total > 1000 ? '¡Gratis!' : '$99'"></span>
+                    <span class="font-semibold" x-text="$store.cart.total > 500000 ? '¡Gratis!' : '$15.000'"></span>
                   </div>
-                  <template x-if="$store.cart.total <= 1000">
+                  <template x-if="$store.cart.total <= 500000">
                     <p class="text-sm text-gray-500">
-                      ¡Agrega $<span x-text="(1000 - $store.cart.total).toLocaleString()"></span> más para envío gratis!
+                      ¡Agrega $<span x-text="(500000 - $store.cart.total).toLocaleString('es-AR')"></span> más para envío gratis!
                     </p>
                   </template>
                   <div class="flex justify-between text-gray-600">
-                    <span>IVA (16%):</span>
-                    <span class="font-semibold">$<span x-text="($store.cart.total * 0.16).toLocaleString(undefined, { maximumFractionDigits: 2 })"></span></span>
+                    <span>IVA (21%):</span>
+                    <span class="font-semibold">$<span x-text="($store.cart.total * 0.21).toLocaleString('es-AR', { maximumFractionDigits: 0 })"></span></span>
                   </div>
                   <div class="border-t-2 pt-4">
                     <div class="flex justify-between text-2xl font-bold text-gray-900">
                       <span>Total:</span>
                       <span class="text-primary-600">
-                        $<span x-text="($store.cart.total + ($store.cart.total > 1000 ? 0 : 99) + ($store.cart.total * 0.16)).toLocaleString(undefined, { maximumFractionDigits: 2 })"></span>
+                        $<span x-text="($store.cart.total + ($store.cart.total > 500000 ? 0 : 15000) + ($store.cart.total * 0.21)).toLocaleString('es-AR', { maximumFractionDigits: 0 })"></span>
                       </span>
                     </div>
                   </div>
