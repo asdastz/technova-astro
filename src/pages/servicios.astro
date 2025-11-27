@@ -1,0 +1,46 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import { services } from '../data/services';
+---
+
+<Layout title="Servicios - TechNova">
+  <div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Header -->
+      <div class="text-center mb-12 animate-fade-in">
+        <h1 class="text-5xl font-bold text-gray-900 mb-4">
+          Nuestros <span class="gradient-text">Servicios</span>
+        </h1>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Soluciones profesionales de TI para empresas y particulares. 
+          Expertos en tecnología a tu servicio.
+        </p>
+      </div>
+
+      <!-- Services Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        {services.map((service, index) => (
+          <div 
+            class="animate-fade-in"
+            style={`animation-delay: ${index * 0.1}s; opacity: 0;`}
+          >
+            <ServiceCard service={service} />
+          </div>
+        ))}
+      </div>
+
+      <!-- CTA Section -->
+      <div class="bg-gradient-to-r from-primary-600 to-primary-800 rounded-2xl shadow-2xl p-12 text-center text-white animate-fade-in">
+        <h2 class="text-4xl font-bold mb-4">¿Necesitas un servicio personalizado?</h2>
+        <p class="text-xl mb-8 opacity-90">
+          Contáctanos y te ayudaremos a encontrar la solución perfecta para tu negocio
+        </p>
+        <a href="/contacto" class="inline-block bg-white text-primary-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors duration-300 shadow-lg">
+          Solicitar Cotización
+        </a>
+      </div>
+    </div>
+  </div>
+</Layout>
+

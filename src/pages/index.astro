@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import ProductCard from '../components/ProductCard.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Newsletter from '../components/Newsletter.astro';
+import { products } from '../data/products';
+import { services } from '../data/services';
+
+const featuredProducts = products.slice(0, 4);
+const featuredServices = services.slice(0, 3);
+---
+
+<Layout title="TechNova - Productos Tecnológicos y Servicios">
+  <Hero />
+  
+  <!-- Featured Products -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 animate-fade-in">
+        <h2 class="section-title">
+          Productos <span class="gradient-text">Destacados</span>
+        </h2>
+        <p class="section-subtitle">
+          Los mejores productos tecnológicos seleccionados para ti
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        {featuredProducts.map((product, index) => (
+          <div class="animate-fade-in" style={`animation-delay: ${index * 0.1}s; opacity: 0;`}>
+            <ProductCard product={product} />
+          </div>
+        ))}
+      </div>
+
+      <div class="text-center">
+        <a href="/productos" class="btn-primary inline-block">
+          Ver Todos los Productos
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Services -->
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 animate-fade-in">
+        <h2 class="section-title">
+          Nuestros <span class="gradient-text">Servicios</span>
+        </h2>
+        <p class="section-subtitle">
+          Soluciones profesionales para todas tus necesidades tecnológicas
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        {featuredServices.map((service, index) => (
+          <div class="animate-fade-in" style={`animation-delay: ${index * 0.1}s; opacity: 0;`}>
+            <ServiceCard service={service} />
+          </div>
+        ))}
+      </div>
+
+      <div class="text-center">
+        <a href="/servicios" class="btn-primary inline-block">
+          Ver Todos los Servicios
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Testimonials />
+  <Newsletter />
+</Layout>
+

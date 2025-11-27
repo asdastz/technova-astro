@@ -1,0 +1,21 @@
+{
+  "name": "cowffe-astro",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "TechNova - Tienda de productos tecnológicos (Astro)",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/tailwind": "^5.1.0",
+    "astro": "^4.16.0",
+    "mercadopago": "^2.11.0",
+    "tailwindcss": "^3.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0"
+  }
+}
+

@@ -1,0 +1,251 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Carrito - TechNova">
+  <div class="min-h-screen bg-gray-50 py-12" x-data="{ paymentError: null, loading: false }">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Empty Cart State -->
+      <template x-if="$store.cart.items.length === 0">
+        <div class="text-center py-20 animate-fade-in">
+          <div class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+            </svg>
+          </div>
+          <h1 class="text-3xl font-bold text-gray-900 mb-4">
+            Tu carrito está vacío
+          </h1>
+          <p class="text-gray-600 mb-8">
+            ¡Agrega algunos productos increíbles!
+          </p>
+          <a href="/productos" class="btn-primary inline-block">
+            Ver Productos
+          </a>
+        </div>
+      </template>
+
+      <!-- Cart with Items -->
+      <template x-if="$store.cart.items.length > 0">
+        <div>
+          <!-- Header -->
+          <div class="mb-8 flex items-center justify-between animate-fade-in">
+            <div>
+              <h1 class="text-4xl font-bold text-gray-900 mb-2 flex items-center gap-3">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+                Carrito de Compras
+              </h1>
+              <p class="text-gray-600">
+                <span x-text="$store.cart.items.length"></span> 
+                <span x-text="$store.cart.items.length === 1 ? 'producto' : 'productos'"></span> en tu carrito
+              </p>
+            </div>
+            <button
+              @click="$store.cart.clear()"
+              class="text-red-500 hover:text-red-600 font-medium flex items-center gap-2"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+              </svg>
+              Vaciar carrito
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Cart Items -->
+            <div class="lg:col-span-2 space-y-4">
+              <template x-for="(item, index) in $store.cart.items" :key="item.id">
+                <div class="bg-white rounded-xl shadow-lg p-6 animate-fade-in">
+                  <div class="flex items-center gap-4">
+                    <img
+                      :src="item.image"
+                      :alt="item.name"
+                      class="w-24 h-24 object-cover rounded-lg"
+                    />
+                    <div class="flex-1">
+                      <h3 class="text-xl font-semibold text-gray-900" x-text="item.name"></h3>
+                      <p class="text-2xl font-bold text-primary-600 mt-2">
+                        $<span x-text="item.price.toLocaleString()"></span>
+                      </p>
+                    </div>
+                    
+                    <!-- Quantity Controls -->
+                    <div class="flex items-center gap-3">
+                      <button
+                        @click="$store.cart.updateQuantity(item.id, item.quantity - 1)"
+                        class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors"
+                      >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+                        </svg>
+                      </button>
+                      <span class="text-xl font-semibold w-8 text-center" x-text="item.quantity"></span>
+                      <button
+                        @click="$store.cart.updateQuantity(item.id, item.quantity + 1)"
+                        class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors"
+                      >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                      </button>
+                    </div>
+
+                    <!-- Item Total -->
+                    <div class="text-right min-w-[100px]">
+                      <p class="text-sm text-gray-500">Subtotal</p>
+                      <p class="text-xl font-bold text-gray-900">
+                        $<span x-text="(item.price * item.quantity).toLocaleString()"></span>
+                      </p>
+                    </div>
+
+                    <!-- Remove Button -->
+                    <button
+                      @click="$store.cart.remove(item.id)"
+                      class="p-3 rounded-lg bg-red-50 text-red-500 hover:bg-red-100 transition-colors"
+                    >
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </template>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="lg:col-span-1">
+              <div class="bg-white rounded-xl shadow-lg p-6 sticky top-24">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Resumen del Pedido</h2>
+                
+                <div class="space-y-4 mb-6">
+                  <div class="flex justify-between text-gray-600">
+                    <span>Subtotal (<span x-text="$store.cart.count"></span> productos):</span>
+                    <span class="font-semibold">$<span x-text="$store.cart.total.toLocaleString()"></span></span>
+                  </div>
+                  <div class="flex justify-between text-gray-600">
+                    <span>Envío:</span>
+                    <span class="font-semibold" x-text="$store.cart.total > 1000 ? '¡Gratis!' : '$99'"></span>
+                  </div>
+                  <template x-if="$store.cart.total <= 1000">
+                    <p class="text-sm text-gray-500">
+                      ¡Agrega $<span x-text="(1000 - $store.cart.total).toLocaleString()"></span> más para envío gratis!
+                    </p>
+                  </template>
+                  <div class="flex justify-between text-gray-600">
+                    <span>IVA (16%):</span>
+                    <span class="font-semibold">$<span x-text="($store.cart.total * 0.16).toLocaleString(undefined, { maximumFractionDigits: 2 })"></span></span>
+                  </div>
+                  <div class="border-t-2 pt-4">
+                    <div class="flex justify-between text-2xl font-bold text-gray-900">
+                      <span>Total:</span>
+                      <span class="text-primary-600">
+                        $<span x-text="($store.cart.total + ($store.cart.total > 1000 ? 0 : 99) + ($store.cart.total * 0.16)).toLocaleString(undefined, { maximumFractionDigits: 2 })"></span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Payment Error -->
+                <template x-if="paymentError">
+                  <div class="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
+                    <svg class="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <div>
+                      <p class="text-red-700 font-medium">Error en el pago</p>
+                      <p class="text-red-600 text-sm" x-text="paymentError"></p>
+                    </div>
+                  </div>
+                </template>
+
+                <!-- Mercado Pago Button -->
+                <button
+                  @click="handlePayment()"
+                  :disabled="loading || $store.cart.items.length === 0"
+                  :class="loading ? 'bg-gray-300 cursor-not-allowed' : 'bg-[#009ee3] hover:bg-[#007eb5]'"
+                  class="w-full flex items-center justify-center gap-3 py-4 px-6 rounded-lg font-bold text-lg text-white transition-all duration-300 shadow-lg hover:shadow-xl"
+                >
+                  <template x-if="loading">
+                    <svg class="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                    </svg>
+                  </template>
+                  <template x-if="!loading">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                    </svg>
+                  </template>
+                  <span x-text="loading ? 'Procesando...' : 'Pagar con Mercado Pago'"></span>
+                </button>
+
+                <div class="my-4 flex items-center gap-4">
+                  <div class="flex-1 h-px bg-gray-200"></div>
+                  <span class="text-gray-400 text-sm">o</span>
+                  <div class="flex-1 h-px bg-gray-200"></div>
+                </div>
+                
+                <a href="/productos" class="block w-full btn-secondary text-center">
+                  Seguir Comprando
+                </a>
+
+                <!-- Trust Badges -->
+                <div class="mt-6 pt-6 border-t">
+                  <div class="flex items-center justify-center gap-4 text-gray-400 text-sm">
+                    <span>🔒 Pago Seguro</span>
+                    <span>🚚 Envío Rápido</span>
+                  </div>
+                  <div class="flex items-center justify-center mt-3">
+                    <img 
+                      src="https://imgmp.mlstatic.com/org-img/banners/mx/medios/MLM_575x40.jpg" 
+                      alt="Métodos de pago Mercado Pago"
+                      class="max-w-full h-auto rounded"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+  </div>
+
+  <script is:inline>
+    async function handlePayment() {
+      const cart = Alpine.store('cart');
+      if (cart.items.length === 0) return;
+
+      const component = document.querySelector('[x-data]');
+      Alpine.$data(component).loading = true;
+      Alpine.$data(component).paymentError = null;
+
+      try {
+        const response = await fetch('/.netlify/functions/create-preference', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items: cart.items }),
+        });
+
+        const data = await response.json();
+
+        if (data.error) {
+          throw new Error(data.error);
+        }
+
+        if (data.init_point) {
+          window.location.href = data.init_point;
+        } else {
+          throw new Error('No se pudo obtener el enlace de pago');
+        }
+      } catch (error) {
+        Alpine.$data(component).paymentError = error.message || 'Error al procesar el pago';
+      } finally {
+        Alpine.$data(component).loading = false;
+      }
+    }
+  </script>
+</Layout>
+
