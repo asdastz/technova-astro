@@ -3,21 +3,21 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Carrito - TechNova">
-  <div class="min-h-screen bg-gray-50 py-12" x-data="{ paymentError: null, loading: false }">
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 transition-colors duration-300" x-data="{ paymentError: null, loading: false }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <!-- Empty Cart State -->
       <template x-if="$store.cart.items.length === 0">
         <div class="text-center py-20 animate-fade-in">
-          <div class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="w-24 h-24 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-12 h-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
             </svg>
           </div>
-          <h1 class="text-3xl font-bold text-gray-900 mb-4">
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
             Tu carrito está vacío
           </h1>
-          <p class="text-gray-600 mb-8">
+          <p class="text-gray-600 dark:text-gray-400 mb-8">
             ¡Agrega algunos productos increíbles!
           </p>
           <a href="/productos" class="btn-primary inline-block">
@@ -32,13 +32,13 @@ import Layout from '../layouts/Layout.astro';
           <!-- Header -->
           <div class="mb-8 flex items-center justify-between animate-fade-in">
             <div>
-              <h1 class="text-4xl font-bold text-gray-900 mb-2 flex items-center gap-3">
+              <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-3">
                 <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                 </svg>
                 Carrito de Compras
               </h1>
-              <p class="text-gray-600">
+              <p class="text-gray-600 dark:text-gray-400">
                 <span x-text="$store.cart.items.length"></span> 
                 <span x-text="$store.cart.items.length === 1 ? 'producto' : 'productos'"></span> en tu carrito
               </p>
@@ -58,7 +58,7 @@ import Layout from '../layouts/Layout.astro';
             <!-- Cart Items -->
             <div class="lg:col-span-2 space-y-4">
               <template x-for="(item, index) in $store.cart.items" :key="item.id">
-                <div class="bg-white rounded-xl shadow-lg p-6 animate-fade-in">
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 animate-fade-in">
                   <div class="flex items-center gap-4">
                     <img
                       :src="item.image"
@@ -66,7 +66,7 @@ import Layout from '../layouts/Layout.astro';
                       class="w-24 h-24 object-cover rounded-lg"
                     />
                     <div class="flex-1">
-                      <h3 class="text-xl font-semibold text-gray-900" x-text="item.name"></h3>
+                      <h3 class="text-xl font-semibold text-gray-900 dark:text-white" x-text="item.name"></h3>
                       <p class="text-2xl font-bold text-primary-600 mt-2">
                         $<span x-text="item.price.toLocaleString()"></span>
                       </p>
@@ -76,16 +76,16 @@ import Layout from '../layouts/Layout.astro';
                     <div class="flex items-center gap-3">
                       <button
                         @click="$store.cart.updateQuantity(item.id, item.quantity - 1)"
-                        class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors"
+                        class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
                       >
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
                         </svg>
                       </button>
-                      <span class="text-xl font-semibold w-8 text-center" x-text="item.quantity"></span>
+                      <span class="text-xl font-semibold w-8 text-center dark:text-white" x-text="item.quantity"></span>
                       <button
                         @click="$store.cart.updateQuantity(item.id, item.quantity + 1)"
-                        class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors"
+                        class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
                       >
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
@@ -95,8 +95,8 @@ import Layout from '../layouts/Layout.astro';
 
                     <!-- Item Total -->
                     <div class="text-right min-w-[100px]">
-                      <p class="text-sm text-gray-500">Subtotal</p>
-                      <p class="text-xl font-bold text-gray-900">
+                      <p class="text-sm text-gray-500 dark:text-gray-400">Subtotal</p>
+                      <p class="text-xl font-bold text-gray-900 dark:text-white">
                         $<span x-text="(item.price * item.quantity).toLocaleString()"></span>
                       </p>
                     </div>
@@ -117,29 +117,29 @@ import Layout from '../layouts/Layout.astro';
 
             <!-- Order Summary -->
             <div class="lg:col-span-1">
-              <div class="bg-white rounded-xl shadow-lg p-6 sticky top-24">
-                <h2 class="text-2xl font-bold text-gray-900 mb-6">Resumen del Pedido</h2>
+              <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 sticky top-24">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Resumen del Pedido</h2>
                 
                 <div class="space-y-4 mb-6">
-                  <div class="flex justify-between text-gray-600">
+                  <div class="flex justify-between text-gray-600 dark:text-gray-400">
                     <span>Subtotal (<span x-text="$store.cart.count"></span> productos):</span>
                     <span class="font-semibold">$<span x-text="$store.cart.total.toLocaleString()"></span></span>
                   </div>
-                  <div class="flex justify-between text-gray-600">
+                  <div class="flex justify-between text-gray-600 dark:text-gray-400">
                     <span>Envío:</span>
                     <span class="font-semibold" x-text="$store.cart.total > 500000 ? '¡Gratis!' : '$15.000'"></span>
                   </div>
                   <template x-if="$store.cart.total <= 500000">
-                    <p class="text-sm text-gray-500">
+                    <p class="text-sm text-gray-500 dark:text-gray-400">
                       ¡Agrega $<span x-text="(500000 - $store.cart.total).toLocaleString('es-AR')"></span> más para envío gratis!
                     </p>
                   </template>
-                  <div class="flex justify-between text-gray-600">
+                  <div class="flex justify-between text-gray-600 dark:text-gray-400">
                     <span>IVA (21%):</span>
                     <span class="font-semibold">$<span x-text="($store.cart.total * 0.21).toLocaleString('es-AR', { maximumFractionDigits: 0 })"></span></span>
                   </div>
                   <div class="border-t-2 pt-4">
-                    <div class="flex justify-between text-2xl font-bold text-gray-900">
+                    <div class="flex justify-between text-2xl font-bold text-gray-900 dark:text-white">
                       <span>Total:</span>
                       <span class="text-primary-600">
                         $<span x-text="($store.cart.total + ($store.cart.total > 500000 ? 0 : 15000) + ($store.cart.total * 0.21)).toLocaleString('es-AR', { maximumFractionDigits: 0 })"></span>
@@ -182,9 +182,9 @@ import Layout from '../layouts/Layout.astro';
                 </button>
 
                 <div class="my-4 flex items-center gap-4">
-                  <div class="flex-1 h-px bg-gray-200"></div>
+                  <div class="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
                   <span class="text-gray-400 text-sm">o</span>
-                  <div class="flex-1 h-px bg-gray-200"></div>
+                  <div class="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
                 </div>
                 
                 <a href="/productos" class="block w-full btn-secondary text-center">

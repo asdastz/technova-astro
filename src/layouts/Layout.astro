@@ -12,13 +12,20 @@ const { title, description = 'Tienda especializada en productos tecnológicos de
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" x-data="{ darkMode: localStorage.getItem('darkMode') === 'true' }" x-init="$watch('darkMode', val => localStorage.setItem('darkMode', val))" :class="{ 'dark': darkMode }">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
+    <script is:inline>
+      // Prevenir flash de tema incorrecto
+      if (localStorage.getItem('darkMode') === 'true' || 
+          (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
   </head>
   <body>
     <Navbar />

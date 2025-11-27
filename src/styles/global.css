@@ -6,11 +6,11 @@
 
 @layer base {
   * {
-    @apply border-gray-200;
+    @apply border-gray-200 dark:border-gray-700;
   }
 
   body {
-    @apply bg-white text-gray-900 font-sans;
+    @apply bg-white text-gray-900 font-sans dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300;
   }
 
   html {
@@ -24,19 +24,19 @@
   }
 
   .btn-secondary {
-    @apply bg-gray-200 text-gray-800 px-6 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-all duration-300;
+    @apply bg-gray-200 text-gray-800 px-6 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-all duration-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600;
   }
 
   .card {
-    @apply bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1;
+    @apply bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 dark:bg-gray-800 dark:shadow-gray-900/50;
   }
 
   .section-title {
-    @apply text-4xl font-bold text-gray-900 mb-4;
+    @apply text-4xl font-bold text-gray-900 mb-4 dark:text-white;
   }
 
   .section-subtitle {
-    @apply text-xl text-gray-600 mb-12;
+    @apply text-xl text-gray-600 mb-12 dark:text-gray-400;
   }
 }
 
